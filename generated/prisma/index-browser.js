@@ -121,26 +121,41 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.CustomerScalarFieldEnum = {
+exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
-  name: 'name',
-  phoneNumber: 'phoneNumber'
+  username: 'username',
+  email: 'email',
+  password: 'password',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
-exports.Prisma.RestaurantScalarFieldEnum = {
+exports.Prisma.CategoryScalarFieldEnum = {
   id: 'id',
-  name: 'name',
+  categoriesName: 'categoriesName'
+};
+
+exports.Prisma.HelpRequestScalarFieldEnum = {
+  id: 'id',
+  nameOfProduct: 'nameOfProduct',
   description: 'description',
-  isOpen: 'isOpen'
+  exchangeProductName: 'exchangeProductName',
+  location: 'location',
+  imageUrl: 'imageUrl',
+  isCheckout: 'isCheckout',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId',
+  categoryId: 'categoryId'
 };
 
-exports.Prisma.OrderScalarFieldEnum = {
+exports.Prisma.ExchangeInformationScalarFieldEnum = {
   id: 'id',
-  orderTime: 'orderTime',
-  itemCount: 'itemCount',
-  eta: 'eta',
-  customerId: 'customerId',
-  restaurantId: 'restaurantId'
+  name: 'name',
+  phone: 'phone',
+  email: 'email',
+  description: 'description',
+  helpRequestId: 'helpRequestId'
 };
 
 exports.Prisma.SortOrder = {
@@ -153,11 +168,17 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 
 exports.Prisma.ModelName = {
-  Customer: 'Customer',
-  Restaurant: 'Restaurant',
-  Order: 'Order'
+  User: 'User',
+  Category: 'Category',
+  HelpRequest: 'HelpRequest',
+  ExchangeInformation: 'ExchangeInformation'
 };
 
 /**
