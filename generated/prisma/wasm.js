@@ -93,26 +93,41 @@ exports.Prisma.TransactionIsolationLevel = makeStrictEnum({
   Serializable: 'Serializable'
 });
 
-exports.Prisma.CustomerScalarFieldEnum = {
+exports.Prisma.UserScalarFieldEnum = {
   id: 'id',
-  name: 'name',
-  phoneNumber: 'phoneNumber'
+  username: 'username',
+  email: 'email',
+  password: 'password',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
 };
 
-exports.Prisma.RestaurantScalarFieldEnum = {
+exports.Prisma.CategoryScalarFieldEnum = {
   id: 'id',
-  name: 'name',
+  categoriesName: 'categoriesName'
+};
+
+exports.Prisma.HelpRequestScalarFieldEnum = {
+  id: 'id',
+  nameOfProduct: 'nameOfProduct',
   description: 'description',
-  isOpen: 'isOpen'
+  exchangeProductName: 'exchangeProductName',
+  location: 'location',
+  imageUrl: 'imageUrl',
+  isCheckout: 'isCheckout',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt',
+  userId: 'userId',
+  categoryId: 'categoryId'
 };
 
-exports.Prisma.OrderScalarFieldEnum = {
+exports.Prisma.ExchangeInformationScalarFieldEnum = {
   id: 'id',
-  orderTime: 'orderTime',
-  itemCount: 'itemCount',
-  eta: 'eta',
-  customerId: 'customerId',
-  restaurantId: 'restaurantId'
+  name: 'name',
+  phone: 'phone',
+  email: 'email',
+  description: 'description',
+  helpRequestId: 'helpRequestId'
 };
 
 exports.Prisma.SortOrder = {
@@ -125,11 +140,17 @@ exports.Prisma.QueryMode = {
   insensitive: 'insensitive'
 };
 
+exports.Prisma.NullsOrder = {
+  first: 'first',
+  last: 'last'
+};
+
 
 exports.Prisma.ModelName = {
-  Customer: 'Customer',
-  Restaurant: 'Restaurant',
-  Order: 'Order'
+  User: 'User',
+  Category: 'Category',
+  HelpRequest: 'HelpRequest',
+  ExchangeInformation: 'ExchangeInformation'
 };
 /**
  * Create the Client
@@ -142,7 +163,7 @@ const config = {
       "value": "prisma-client-js"
     },
     "output": {
-      "value": "/Users/feliciasword/VP Postgre Intro/generated/prisma",
+      "value": "/Users/feliciasword/VP_Postgre_Intro_copy/ALP_VP_Backend/generated/prisma",
       "fromEnvVar": null
     },
     "config": {
@@ -156,7 +177,7 @@ const config = {
       }
     ],
     "previewFeatures": [],
-    "sourceFilePath": "/Users/feliciasword/VP Postgre Intro/prisma/schema.prisma",
+    "sourceFilePath": "/Users/feliciasword/VP_Postgre_Intro_copy/ALP_VP_Backend/prisma/schema.prisma",
     "isCustomOutput": true
   },
   "relativeEnvPaths": {
@@ -170,7 +191,6 @@ const config = {
     "db"
   ],
   "activeProvider": "postgresql",
-  "postinstall": false,
   "inlineDatasources": {
     "db": {
       "url": {
@@ -179,13 +199,13 @@ const config = {
       }
     }
   },
-  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\nmodel Customer {\n  id          Int     @id @default(autoincrement())\n  name        String\n  phoneNumber String\n  orders      Order[]\n\n  @@map(\"customers\")\n}\n\nmodel Restaurant {\n  id          Int     @id @default(autoincrement())\n  name        String\n  description String\n  isOpen      Boolean @default(true) // Handles \"opened/closed\" status\n  orders      Order[]\n\n  @@map(\"restaurantsyb\")\n}\n\n// This is the pivot table linking Customer and Restaurant\nmodel Order {\n  id        Int      @id @default(autoincrement())\n  orderTime DateTime @default(now())\n  itemCount Int // \"Items only need to be amount of item\"\n  eta       Int // Estimated Time of Arrival in minutes\n\n  // Foreign Keys\n  customerId   Int\n  restaurantId Int\n\n  customer   Customer   @relation(fields: [customerId], references: [id], onDelete: Cascade)\n  restaurant Restaurant @relation(fields: [restaurantId], references: [id], onDelete: Cascade)\n\n  @@map(\"orders\")\n}\n",
-  "inlineSchemaHash": "224cf97e87b41829fb0344d9427163f45b7687573e54d6fcda2a140c974a5ea6",
+  "inlineSchema": "generator client {\n  provider = \"prisma-client-js\"\n  output   = \"../generated/prisma\"\n}\n\ndatasource db {\n  provider = \"postgresql\"\n  url      = env(\"DATABASE_URL\")\n}\n\n// --- 1. USER MODEL ---\nmodel User {\n  id       Int    @id @default(autoincrement()) @map(\"user_id\") // Maps to 'user_id' in DB\n  username String @unique @db.VarChar(100)\n  email    String @unique @db.VarChar(150)\n  password String @db.VarChar(100)\n\n  // Timestamps\n  createdAt DateTime @default(now()) @map(\"created_at\")\n  updatedAt DateTime @updatedAt @map(\"updated_at\")\n\n  // Relations\n  helpRequests HelpRequest[]\n\n  @@map(\"users\")\n}\n\n// --- 2. CATEGORY MODEL ---\n// (Included because your HelpRequest needs it based on your ERD)\nmodel Category {\n  id             Int    @id @default(autoincrement()) @map(\"category_id\")\n  categoriesName String @map(\"categories_name\") @db.VarChar(100)\n\n  helpRequests HelpRequest[]\n\n  @@map(\"categories\")\n}\n\n// --- 3. HELP REQUEST (Post Offer) ---\nmodel HelpRequest {\n  id Int @id @default(autoincrement()) @map(\"help_request_id\")\n\n  // THE FIX: CamelCase here @map(\"snake_case_in_db\")\n  nameOfProduct       String  @map(\"name_of_product\") @db.VarChar(255)\n  description         String  @db.Text\n  exchangeProductName String  @map(\"exchange_product_name\") @db.VarChar(255)\n  location            String  @map(\"help_request_location\") @db.VarChar(255)\n  imageUrl            String  @default(\"\") @map(\"help_request_image_url\") @db.VarChar(255)\n  isCheckout          Boolean @default(false) @map(\"is_checkout\")\n\n  createdAt DateTime @default(now()) @map(\"created_at\")\n  updatedAt DateTime @updatedAt @map(\"updated_at\")\n\n  // Foreign Keys\n  userId     Int @map(\"users_id\")\n  categoryId Int @map(\"categories_id\") // Added to match ERD\n\n  // Relations\n  user          User                  @relation(fields: [userId], references: [id])\n  category      Category              @relation(fields: [categoryId], references: [id])\n  exchangeInfos ExchangeInformation[]\n\n  @@map(\"help_requests\")\n}\n\n// --- 4. EXCHANGE INFORMATION ---\nmodel ExchangeInformation {\n  id Int @id @default(autoincrement()) @map(\"exchange_information_id\")\n\n  // THE FIX: CamelCase here @map(\"snake_case_in_db\")\n  name        String  @map(\"exchange_information_name\") @db.VarChar(100)\n  phone       String  @map(\"exchange_information_phone\") @db.VarChar(20)\n  email       String? @map(\"exchange_information_email\") @db.VarChar(150)\n  description String? @map(\"exchange_information_description\") @db.Text\n\n  // Foreign Key\n  helpRequestId Int @map(\"help_requests_id\")\n\n  // Relation\n  helpRequest HelpRequest @relation(fields: [helpRequestId], references: [id], onDelete: Cascade)\n\n  @@map(\"exchange_informations\")\n}\n",
+  "inlineSchemaHash": "835be918fcffe3d9f44cab2baf8ad708274be6719064a6fd47fec28b4753d3dd",
   "copyEngine": true
 }
 config.dirname = '/'
 
-config.runtimeDataModel = JSON.parse("{\"models\":{\"Customer\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"phoneNumber\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"orders\",\"kind\":\"object\",\"type\":\"Order\",\"relationName\":\"CustomerToOrder\"}],\"dbName\":\"customers\"},\"Restaurant\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"isOpen\",\"kind\":\"scalar\",\"type\":\"Boolean\"},{\"name\":\"orders\",\"kind\":\"object\",\"type\":\"Order\",\"relationName\":\"OrderToRestaurant\"}],\"dbName\":\"restaurantsyb\"},\"Order\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"orderTime\",\"kind\":\"scalar\",\"type\":\"DateTime\"},{\"name\":\"itemCount\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"eta\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"customerId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"restaurantId\",\"kind\":\"scalar\",\"type\":\"Int\"},{\"name\":\"customer\",\"kind\":\"object\",\"type\":\"Customer\",\"relationName\":\"CustomerToOrder\"},{\"name\":\"restaurant\",\"kind\":\"object\",\"type\":\"Restaurant\",\"relationName\":\"OrderToRestaurant\"}],\"dbName\":\"orders\"}},\"enums\":{},\"types\":{}}")
+config.runtimeDataModel = JSON.parse("{\"models\":{\"User\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\",\"dbName\":\"user_id\"},{\"name\":\"username\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"password\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"updated_at\"},{\"name\":\"helpRequests\",\"kind\":\"object\",\"type\":\"HelpRequest\",\"relationName\":\"HelpRequestToUser\"}],\"dbName\":\"users\"},\"Category\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\",\"dbName\":\"category_id\"},{\"name\":\"categoriesName\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"categories_name\"},{\"name\":\"helpRequests\",\"kind\":\"object\",\"type\":\"HelpRequest\",\"relationName\":\"CategoryToHelpRequest\"}],\"dbName\":\"categories\"},\"HelpRequest\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\",\"dbName\":\"help_request_id\"},{\"name\":\"nameOfProduct\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"name_of_product\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\"},{\"name\":\"exchangeProductName\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"exchange_product_name\"},{\"name\":\"location\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"help_request_location\"},{\"name\":\"imageUrl\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"help_request_image_url\"},{\"name\":\"isCheckout\",\"kind\":\"scalar\",\"type\":\"Boolean\",\"dbName\":\"is_checkout\"},{\"name\":\"createdAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"created_at\"},{\"name\":\"updatedAt\",\"kind\":\"scalar\",\"type\":\"DateTime\",\"dbName\":\"updated_at\"},{\"name\":\"userId\",\"kind\":\"scalar\",\"type\":\"Int\",\"dbName\":\"users_id\"},{\"name\":\"categoryId\",\"kind\":\"scalar\",\"type\":\"Int\",\"dbName\":\"categories_id\"},{\"name\":\"user\",\"kind\":\"object\",\"type\":\"User\",\"relationName\":\"HelpRequestToUser\"},{\"name\":\"category\",\"kind\":\"object\",\"type\":\"Category\",\"relationName\":\"CategoryToHelpRequest\"},{\"name\":\"exchangeInfos\",\"kind\":\"object\",\"type\":\"ExchangeInformation\",\"relationName\":\"ExchangeInformationToHelpRequest\"}],\"dbName\":\"help_requests\"},\"ExchangeInformation\":{\"fields\":[{\"name\":\"id\",\"kind\":\"scalar\",\"type\":\"Int\",\"dbName\":\"exchange_information_id\"},{\"name\":\"name\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"exchange_information_name\"},{\"name\":\"phone\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"exchange_information_phone\"},{\"name\":\"email\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"exchange_information_email\"},{\"name\":\"description\",\"kind\":\"scalar\",\"type\":\"String\",\"dbName\":\"exchange_information_description\"},{\"name\":\"helpRequestId\",\"kind\":\"scalar\",\"type\":\"Int\",\"dbName\":\"help_requests_id\"},{\"name\":\"helpRequest\",\"kind\":\"object\",\"type\":\"HelpRequest\",\"relationName\":\"ExchangeInformationToHelpRequest\"}],\"dbName\":\"exchange_informations\"}},\"enums\":{},\"types\":{}}")
 defineDmmfProperty(exports.Prisma, config.runtimeDataModel)
 config.engineWasm = {
   getRuntime: async () => require('./query_engine_bg.js'),

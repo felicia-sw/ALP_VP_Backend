@@ -8,91 +8,76 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// --- 1. USER MODEL ---
 model User {
-  id       Int     @id @default(autoincrement()) @map("user_id")
-  name     String
-  email    String  @unique
-  phone    String?
-  password String
+  id        Int      @id @default(autoincrement()) @map("user_id") // Maps to 'user_id' in DB
+  username  String   @unique @db.VarChar(100)
+  email     String   @unique @db.VarChar(150)
+  password  String   @db.VarChar(100)
+  
+  // Timestamps
+  createdAt DateTime @default(now()) @map("created_at")
+  updatedAt DateTime @updatedAt @map("updated_at")
 
-  shoppingCart ShoppingCart? 
-  helpRequests HelpRequest[] 
-  responses    Response[]   
-
-  @@map("users") 
-}
-
-model ShoppingCart {
-  id     Int @id @default(autoincrement()) @map("cart_id")
-  userId Int @unique @map("user_id") 
-
-  user  User               @relation(fields: [userId], references: [id])
-  items ShoppingCartItem[]
-
-  @@map("shopping_carts")
-}
-model ShoppingCartItem {
-  cartId        Int      @map("cart_id")
-  helpRequestId Int      @map("help_request_id")
-  addedAt       DateTime @default(now()) @map("added_at")
-
-  cart        ShoppingCart @relation(fields: [cartId], references: [id])
-  helpRequest HelpRequest  @relation(fields: [helpRequestId], references: [id])
-
-  @@id([cartId, helpRequestId])
-  @@map("shopping_cart_items")
-}
-
-model Category {
-  id   Int    @id @default(autoincrement()) @map("category_id")
-  name String @map("categories_name")
-
+  // Relations
   helpRequests HelpRequest[]
+
+  @@map("users")
+}
+
+// --- 2. CATEGORY MODEL ---
+// (Included because your HelpRequest needs it based on your ERD)
+model Category {
+  id             Int           @id @default(autoincrement()) @map("category_id")
+  categoriesName String        @map("categories_name") @db.VarChar(100)
+  
+  helpRequests   HelpRequest[]
 
   @@map("categories")
 }
 
+// --- 3. HELP REQUEST (Post Offer) ---
 model HelpRequest {
-  id                  Int     @id @default(autoincrement()) @map("help_request_id")
-  nameOfProduct       String  @map("name_of_product")
-  description         String  @db.Text
-  exchangeProductName String? @map("exchange_product_name")
-  location            String? @map("help_request_location")
-  imageUrl            String? @map("help_request_image_url")
-  isCheckout          Boolean @default(false) @map("is_checkout")
+  id                  Int      @id @default(autoincrement()) @map("help_request_id")
+  
+  // THE FIX: CamelCase here @map("snake_case_in_db")
+  nameOfProduct       String   @map("name_of_product") @db.VarChar(255)
+  description         String   @db.Text
+  exchangeProductName String   @map("exchange_product_name") @db.VarChar(255)
+  location            String   @map("help_request_location") @db.VarChar(255)
+  imageUrl            String   @default("") @map("help_request_image_url") @db.VarChar(255)
+  isCheckout          Boolean  @default(false) @map("is_checkout")
+  
+  createdAt           DateTime @default(now()) @map("created_at")
+  updatedAt           DateTime @updatedAt @map("updated_at")
 
-  userId     Int @map("users_id")
-  categoryId Int @map("categories_id")
-
-  user                User                  @relation(fields: [userId], references: [id])
-  category            Category              @relation(fields: [categoryId], references: [id])
-  cartItems           ShoppingCartItem[]
-  responses           Response[]
-  exchangeInformation ExchangeInformation[]
-
+  // Foreign Keys
+  userId              Int      @map("users_id")
+  categoryId          Int      @map("categories_id") // Added to match ERD
+  
+  // Relations
+  user                User     @relation(fields: [userId], references: [id])
+  category            Category @relation(fields: [categoryId], references: [id])
+  exchangeInfos       ExchangeInformation[]
+  
   @@map("help_requests")
 }
 
-model Response {
-  id            Int @id @default(autoincrement()) @map("response_id")
-  userId        Int @map("users_id")
-  helpRequestId Int @map("help_requests_id")
-
-  user        User        @relation(fields: [userId], references: [id])
-  helpRequest HelpRequest @relation(fields: [helpRequestId], references: [id])
-
-  @@map("responses")
-}
-
+// --- 4. EXCHANGE INFORMATION ---
 model ExchangeInformation {
-  id            Int     @id @default(autoincrement()) @map("exchange_information_id")
-  name          String? @map("exchange_information_name")
-  phone         String? @map("exchange_information_phone")
-  email         String? @map("exchange_information_email")
-  description   String? @db.Text @map("exchange_information_description")
-  helpRequestId Int     @map("help_requests_id")
+  id                  Int     @id @default(autoincrement()) @map("exchange_information_id")
+  
+  // THE FIX: CamelCase here @map("snake_case_in_db")
+  name                String  @map("exchange_information_name") @db.VarChar(100)
+  phone               String  @map("exchange_information_phone") @db.VarChar(20)
+  email               String? @map("exchange_information_email") @db.VarChar(150)
+  description         String? @map("exchange_information_description") @db.Text
 
-  helpRequest HelpRequest @relation(fields: [helpRequestId], references: [id])
+  // Foreign Key
+  helpRequestId       Int     @map("help_requests_id")
+  
+  // Relation
+  helpRequest         HelpRequest @relation(fields: [helpRequestId], references: [id], onDelete: Cascade)
 
   @@map("exchange_informations")
 }

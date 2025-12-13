@@ -1,65 +1,87 @@
 import { PrismaClient } from "../generated/prisma";
+import bcrypt from "bcrypt";
 
 const prisma = new PrismaClient();
 
 async function main() {
-    // 1. Create 3 Customers
-    const c1 = await prisma.customer.create({
-        data: { name: "Budi Santoso", phoneNumber: "081234567890" }
+    // Optional: Clear existing data to avoid "Unique constraint" errors when re-running
+    await prisma.exchangeInformation.deleteMany();
+    await prisma.helpRequest.deleteMany();
+    await prisma.user.deleteMany();
+    await prisma.category.deleteMany();
+    
+    console.log("Deleted old data...");
+
+    // 1. Create Categories
+    // These are the types of help people can offer/request
+    const grocery = await prisma.category.create({
+        data: { categoriesName: "Groceries" }
     });
-    const c2 = await prisma.customer.create({
-        data: { name: "Siti Aminah", phoneNumber: "089876543210" }
+    const education = await prisma.category.create({
+        data: { categoriesName: "Education & Tutoring" }
     });
-    const c3 = await prisma.customer.create({
-        data: { name: "John Doe", phoneNumber: "081122334455" }
+    const repair = await prisma.category.create({
+        data: { categoriesName: "Home Repair" }
+    });
+    const household = await prisma.category.create({
+        data: { categoriesName: "Household Items" }
     });
 
-    console.log("Created 3 Customers");
+    console.log("Created Categories: Groceries, Education, Repair, Household");
 
-    // 2. Create 3 Restaurants
-    const r1 = await prisma.restaurant.create({
-        data: { name: "Padang Sederhana", description: "Authentic Padang Cuisine", isOpen: true }
-    });
-    const r2 = await prisma.restaurant.create({
-        data: { name: "Burger King", description: "Fast Food Burgers", isOpen: true }
-    });
-    const r3 = await prisma.restaurant.create({
-        data: { name: "Sushi Tei", description: "Japanese Sushi", isOpen: false } // One closed for testing
-    });
+    // 2. Create Users
+    // We hash the password so it mimics a real secure login
+    const hashedPassword = await bcrypt.hash("password123", 10);
 
-    console.log("Created 3 Restaurants");
-
-    // 3. Create 5 Orders (Mixing customers and restaurants)
-    // Order 1: Budi orders from Padang
-    await prisma.order.create({
-        data: { customerId: c1.id, restaurantId: r1.id, itemCount: 2, eta: 30 } // 2*10 + 10 = 30
-    });
-    // Order 2: Budi orders from Burger King
-    await prisma.order.create({
-        data: { customerId: c1.id, restaurantId: r2.id, itemCount: 1, eta: 20 }
-    });
-    // Order 3: Siti orders from Padang
-    await prisma.order.create({
-        data: { customerId: c2.id, restaurantId: r1.id, itemCount: 5, eta: 60 }
-    });
-    // Order 4: John orders from Sushi Tei (maybe pre-order?)
-    await prisma.order.create({
-        data: { customerId: c3.id, restaurantId: r3.id, itemCount: 3, eta: 40 }
-    });
-    // Order 5: Siti orders from Burger King
-    await prisma.order.create({
-        data: { customerId: c2.id, restaurantId: r2.id, itemCount: 10, eta: 110 }
+    const user1 = await prisma.user.create({
+        data: {
+            username: "felicia_sword",
+            email: "felicia@example.com",
+            password: hashedPassword,
+        }
     });
 
-    console.log("Created 5 Orders");
+    const user2 = await prisma.user.create({
+        data: {
+            username: "timothy_neighbor",
+            email: "timothy@example.com",
+            password: hashedPassword,
+        }
+    });
+
+    const user3 = await prisma.user.create({
+        data: {
+            username: "budi_santoso",
+            email: "budi@example.com",
+            password: hashedPassword,
+        }
+    });
+
+    console.log("Created 3 Users: felicia_sword, timothy_neighbor, budi_santoso");
+
+    // 3. (Optional) Create one Help Request just to see data immediately
+    await prisma.helpRequest.create({
+        data: {
+            nameOfProduct: "Algebra Textbook",
+            description: "I have an old high school math book I don't need.",
+            exchangeProductName: "Chocolate Bar", // Barter item
+            location: "Cluster A, No. 12",
+            imageUrl: "",
+            isCheckout: false,
+            userId: user1.id,       // Connected to Felicia
+            categoryId: education.id // Connected to Education category
+        }
+    });
+
+    console.log("Created 1 Initial Help Request");
 }
 
 main()
-.then(async () => {
-    await prisma.$disconnect();
-})
-.catch(async (e) => {
-    console.error(e);
-    await prisma.$disconnect();
-    process.exit(1);
-})
+    .then(async () => {
+        await prisma.$disconnect();
+    })
+    .catch(async (e) => {
+        console.error(e);
+        await prisma.$disconnect();
+        process.exit(1);
+    });
