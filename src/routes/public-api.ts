@@ -12,4 +12,8 @@ publicRouter.get("/api/help-requests", HelpRequestController.getAll);
 // publicRouter.post("/register", UserController.register);
 // publicRouter.post("/login", UserController.login);
 
+// --- EXCHANGE ROUTES ---
 publicRouter.post("/api/exchanges", ExchangeController.create);
+// New Routes:
+publicRouter.get("/api/exchanges", ExchangeController.getAllExchanges); // Supports ?helpRequestId=1
+publicRouter.delete("/api/exchanges/:exchangeId", ExchangeController.deleteExchange);

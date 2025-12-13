@@ -31,3 +31,8 @@ export function toExchangeResponse(exchange: ExchangeInformation): ExchangeRespo
         helpRequestId: exchange.helpRequestId
     }
 }
+
+// part of step to connect to frontend later, this is to convert  a list of database rows to a list of clean JSON responses
+export function toExchangeResponseList(exchanges: ExchangeInformation[]): ExchangeResponse[] {
+    return exchanges.map((exchange) => toExchangeResponse(exchange));
+}
