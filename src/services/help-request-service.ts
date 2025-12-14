@@ -33,7 +33,7 @@ export class HelpRequestService {
                 description: validatedData.description,
                 exchangeProductName: validatedData.exchangeProductName,
                 location: validatedData.location,
-                imageUrl: validatedData.imageUrl || "", // Handle empty string if optional
+                imageUrl: validatedData.imageUrl || "", // handle  empty string if optional
                 userId: validatedData.userId,
                 categoryId: validatedData.categoryId
             }
@@ -43,7 +43,15 @@ export class HelpRequestService {
     }
 
     static async getAll(): Promise<HelpRequestResponse[]> {
-        const helpRequests = await prismaClient.helpRequest.findMany();
+        
+        const helpRequests = await prismaClient.helpRequest.findMany({
+            include: {
+                user: true //  include th username email for UI cards
+            },
+            orderBy: {
+                createdAt: 'desc' 
+            }
+        });
         return toHelpRequestResponseList(helpRequests);
     }
 }
