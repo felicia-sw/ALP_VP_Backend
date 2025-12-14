@@ -42,9 +42,13 @@ export class HelpRequestService {
         return toHelpRequestResponse(helpRequest);
     }
 
-    static async getAll(): Promise<HelpRequestResponse[]> {
-        
-        const helpRequests = await prismaClient.helpRequest.findMany({
+   static async getAll(categoryId?: number): Promise<HelpRequestResponse[]> {
+    
+    const helpRequests = await prismaClient.helpRequest.findMany({
+               where: {
+            // if categoryId ada akan di filter, if not hen ignore
+            categoryId: categoryId 
+        },
             include: {
                 user: true //  include th username email for UI cards
             },
