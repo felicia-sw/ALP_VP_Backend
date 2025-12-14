@@ -1,3 +1,68 @@
+import { Request, Response, NextFunction } from "express";
+import { prismaClient } from "../utils/database-util";
+import * as bcrypt from "bcrypt";
+import {
+    LoginUserRequest,
+    RegisterUserRequest,
+    toUserResponse,
+} from "../models/user-model";
+
+export class UserController {
+    static async register(req: Request, res: Response, next: NextFunction) {
+        try {
+            const request = req.body as RegisterUserRequest;
+
+            // Check if user with same email exists
+            const existing = await prismaClient.user.findUnique({
+                where: { email: request.email },
+            });
+            if (existing) {
+                return res.status(409).json({ message: "Email already registered" });
+            }
+
+            const hashed = await bcrypt.hash(request.password, 10);
+
+            const user = await prismaClient.user.create({
+                data: {
+                    username: request.username,
+                    email: request.email,
+                    password: hashed,
+                },
+            });
+
+            const response = toUserResponse(user.id, user.username, user.email);
+
+            res.status(201).json({ data: response });
+        } catch (error) {
+            next(error);
+        }
+    }
+
+    static async login(req: Request, res: Response, next: NextFunction) {
+        try {
+            const request = req.body as LoginUserRequest;
+
+            const user = await prismaClient.user.findUnique({
+                where: { email: request.email },
+            });
+
+            if (!user) {
+                return res.status(401).json({ message: "Invalid credentials" });
+            }
+
+            const match = await bcrypt.compare(request.password, user.password);
+            if (!match) {
+                return res.status(401).json({ message: "Invalid credentials" });
+            }
+
+            const response = toUserResponse(user.id, user.username, user.email);
+
+            res.status(200).json({ data: response });
+        } catch (error) {
+            next(error);
+        }
+    }
+}
 // import { Request, Response, NextFunction } from "express"
 // import {
 //     LoginUserRequest,
