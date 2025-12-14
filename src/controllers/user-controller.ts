@@ -6,11 +6,15 @@ import {
     RegisterUserRequest,
     toUserResponse,
 } from "../models/user-model";
+import { Validation } from "../validations/validation";
+import { UserValidation } from "../validations/user-validation";
 
 export class UserController {
     static async register(req: Request, res: Response, next: NextFunction) {
         try {
             const request = req.body as RegisterUserRequest;
+
+            Validation.validate(UserValidation.REGISTER, request);
 
             // Check if user with same email exists
             const existing = await prismaClient.user.findUnique({
@@ -62,7 +66,11 @@ export class UserController {
             next(error);
         }
     }
+
+    
 }
+
+
 // import { Request, Response, NextFunction } from "express"
 // import {
 //     LoginUserRequest,
