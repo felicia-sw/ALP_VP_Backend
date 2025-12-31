@@ -7,10 +7,10 @@ import { ResponseError } from "../error/response-error";
 export class HelpRequestService {
 
     static async create(request: CreateHelpRequest): Promise<HelpRequestResponse> {
-        // 1. Validate the input data (Uses the Zod schema we updated in File 1)
+        // 1. Validate the input data
         const validatedData = Validation.validate(HelpRequestValidation.CREATE, request);
 
-        // 2. Check if Category exists
+        // 2. Check if Category exists (Optional but good practice)
         const categoryCount = await prismaClient.category.count({
             where: { id: validatedData.categoryId }
         });
@@ -33,13 +33,9 @@ export class HelpRequestService {
                 description: validatedData.description,
                 exchangeProductName: validatedData.exchangeProductName,
                 location: validatedData.location,
-                imageUrl: validatedData.imageUrl || "",
+                imageUrl: validatedData.imageUrl || "", // Handle empty string if optional
                 userId: validatedData.userId,
-                categoryId: validatedData.categoryId,
-                
-                // --- NEW: Pass the validated phone/email to Prisma ---
-                contactPhone: validatedData.contactPhone,
-                contactEmail: validatedData.contactEmail
+                categoryId: validatedData.categoryId
             }
         });
 

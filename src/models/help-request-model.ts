@@ -1,6 +1,6 @@
 import { HelpRequest } from "../../generated/prisma";
 
-// 1. Request: What the Android App sends to us
+// What the user sends to the backend
 export interface CreateHelpRequest {
     nameOfProduct: string;
     description: string;
@@ -8,13 +8,10 @@ export interface CreateHelpRequest {
     location: string;
     imageUrl: string;
     categoryId: number;
-    userId: number;
-    // --- NEW ---
-    contactPhone: string;
-    contactEmail?: string; // ? means it can be undefined
+    userId: number; // In a real app, this comes from the logged-in user token
 }
 
-// 2. Response: What we send back to Android
+// What the backend sends back to the user
 export interface HelpRequestResponse {
     id: number;
     nameOfProduct: string;
@@ -25,12 +22,9 @@ export interface HelpRequestResponse {
     isCheckout: boolean;
     userId: number;
     categoryId: number;
-    // --- NEW ---
-    contactPhone: string;
-    contactEmail: string | null;
 }
 
-// 3. Helper: Convert Database Row -> JSON Response
+// Helper to convert Database Row -> Clean Response
 export function toHelpRequestResponse(helpRequest: HelpRequest): HelpRequestResponse {
     return {
         id: helpRequest.id,
@@ -38,13 +32,10 @@ export function toHelpRequestResponse(helpRequest: HelpRequest): HelpRequestResp
         description: helpRequest.description,
         exchangeProductName: helpRequest.exchangeProductName,
         location: helpRequest.location,
-        imageUrl: helpRequest.imageUrl || "", // Handle potential nulls
+        imageUrl: helpRequest.imageUrl,
         isCheckout: helpRequest.isCheckout,
         userId: helpRequest.userId,
-        categoryId: helpRequest.categoryId,
-        // --- NEW ---
-        contactPhone: helpRequest.contactPhone,
-        contactEmail: helpRequest.contactEmail
+        categoryId: helpRequest.categoryId
     }
 }
 

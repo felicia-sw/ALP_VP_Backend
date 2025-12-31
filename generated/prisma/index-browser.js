@@ -143,8 +143,6 @@ exports.Prisma.HelpRequestScalarFieldEnum = {
   location: 'location',
   imageUrl: 'imageUrl',
   isCheckout: 'isCheckout',
-  contactPhone: 'contactPhone',
-  contactEmail: 'contactEmail',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   userId: 'userId',
