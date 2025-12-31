@@ -12,25 +12,33 @@ async function main() {
     
     console.log("Deleted old data...");
 
-    // 1. Create Categories
-    // These are the types of help people can offer/request
-    const grocery = await prisma.category.create({
-        data: { categoriesName: "Groceries" }
-    });
-    const education = await prisma.category.create({
-        data: { categoriesName: "Education & Tutoring" }
-    });
-    const repair = await prisma.category.create({
-        data: { categoriesName: "Home Repair" }
-    });
-    const household = await prisma.category.create({
-        data: { categoriesName: "Household Items" }
+    // ============================================================
+    // 1. Create Categories (UPDATED)
+    // We create 'Barang' and 'Jasa' first. 
+    // We explicitly set IDs 1 and 2 to match the Android App logic.
+    // ============================================================
+    
+    const barang = await prisma.category.upsert({
+        where: { id: 1 },
+        update: {},
+        create: {
+            id: 1,
+            categoriesName: "Barang"
+        }
     });
 
-    console.log("Created Categories: Groceries, Education, Repair, Household");
+    const jasa = await prisma.category.upsert({
+        where: { id: 2 },
+        update: {},
+        create: {
+            id: 2,
+            categoriesName: "Jasa"
+        }
+    });
+
+    console.log("Created Categories: Barang (ID 1), Jasa (ID 2)");
 
     // 2. Create Users
-    // We hash the password so it mimics a real secure login
     const hashedPassword = await bcrypt.hash("password123", 10);
 
     const user1 = await prisma.user.create({
@@ -59,17 +67,20 @@ async function main() {
 
     console.log("Created 3 Users: felicia_sword, timothy_neighbor, budi_santoso");
 
-    // 3. (Optional) Create one Help Request just to see data immediately
+    // ============================================================
+    // 3. Create Help Request (UPDATED)
+    // Updated to use 'barang.id' since 'education' no longer exists
+    // ============================================================
     await prisma.helpRequest.create({
         data: {
             nameOfProduct: "Algebra Textbook",
             description: "I have an old high school math book I don't need.",
-            exchangeProductName: "Chocolate Bar", // Barter item
+            exchangeProductName: "Chocolate Bar", 
             location: "Cluster A, No. 12",
             imageUrl: "",
             isCheckout: false,
-            userId: user1.id,       // Connected to Felicia
-            categoryId: education.id // Connected to Education category
+            userId: user1.id,       
+            categoryId: barang.id // Linked to 'Barang'
         }
     });
 
