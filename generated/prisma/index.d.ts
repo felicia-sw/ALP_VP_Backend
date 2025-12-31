@@ -3440,6 +3440,8 @@ export namespace Prisma {
     location: string | null
     imageUrl: string | null
     isCheckout: boolean | null
+    contactPhone: string | null
+    contactEmail: string | null
     createdAt: Date | null
     updatedAt: Date | null
     userId: number | null
@@ -3454,6 +3456,8 @@ export namespace Prisma {
     location: string | null
     imageUrl: string | null
     isCheckout: boolean | null
+    contactPhone: string | null
+    contactEmail: string | null
     createdAt: Date | null
     updatedAt: Date | null
     userId: number | null
@@ -3468,6 +3472,8 @@ export namespace Prisma {
     location: number
     imageUrl: number
     isCheckout: number
+    contactPhone: number
+    contactEmail: number
     createdAt: number
     updatedAt: number
     userId: number
@@ -3496,6 +3502,8 @@ export namespace Prisma {
     location?: true
     imageUrl?: true
     isCheckout?: true
+    contactPhone?: true
+    contactEmail?: true
     createdAt?: true
     updatedAt?: true
     userId?: true
@@ -3510,6 +3518,8 @@ export namespace Prisma {
     location?: true
     imageUrl?: true
     isCheckout?: true
+    contactPhone?: true
+    contactEmail?: true
     createdAt?: true
     updatedAt?: true
     userId?: true
@@ -3524,6 +3534,8 @@ export namespace Prisma {
     location?: true
     imageUrl?: true
     isCheckout?: true
+    contactPhone?: true
+    contactEmail?: true
     createdAt?: true
     updatedAt?: true
     userId?: true
@@ -3625,6 +3637,8 @@ export namespace Prisma {
     location: string
     imageUrl: string
     isCheckout: boolean
+    contactPhone: string
+    contactEmail: string | null
     createdAt: Date
     updatedAt: Date
     userId: number
@@ -3658,6 +3672,8 @@ export namespace Prisma {
     location?: boolean
     imageUrl?: boolean
     isCheckout?: boolean
+    contactPhone?: boolean
+    contactEmail?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
@@ -3676,6 +3692,8 @@ export namespace Prisma {
     location?: boolean
     imageUrl?: boolean
     isCheckout?: boolean
+    contactPhone?: boolean
+    contactEmail?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
@@ -3692,6 +3710,8 @@ export namespace Prisma {
     location?: boolean
     imageUrl?: boolean
     isCheckout?: boolean
+    contactPhone?: boolean
+    contactEmail?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
@@ -3708,13 +3728,15 @@ export namespace Prisma {
     location?: boolean
     imageUrl?: boolean
     isCheckout?: boolean
+    contactPhone?: boolean
+    contactEmail?: boolean
     createdAt?: boolean
     updatedAt?: boolean
     userId?: boolean
     categoryId?: boolean
   }
 
-  export type HelpRequestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nameOfProduct" | "description" | "exchangeProductName" | "location" | "imageUrl" | "isCheckout" | "createdAt" | "updatedAt" | "userId" | "categoryId", ExtArgs["result"]["helpRequest"]>
+  export type HelpRequestOmit<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = $Extensions.GetOmit<"id" | "nameOfProduct" | "description" | "exchangeProductName" | "location" | "imageUrl" | "isCheckout" | "contactPhone" | "contactEmail" | "createdAt" | "updatedAt" | "userId" | "categoryId", ExtArgs["result"]["helpRequest"]>
   export type HelpRequestInclude<ExtArgs extends $Extensions.InternalArgs = $Extensions.DefaultArgs> = {
     user?: boolean | UserDefaultArgs<ExtArgs>
     category?: boolean | CategoryDefaultArgs<ExtArgs>
@@ -3745,6 +3767,8 @@ export namespace Prisma {
       location: string
       imageUrl: string
       isCheckout: boolean
+      contactPhone: string
+      contactEmail: string | null
       createdAt: Date
       updatedAt: Date
       userId: number
@@ -4182,6 +4206,8 @@ export namespace Prisma {
     readonly location: FieldRef<"HelpRequest", 'String'>
     readonly imageUrl: FieldRef<"HelpRequest", 'String'>
     readonly isCheckout: FieldRef<"HelpRequest", 'Boolean'>
+    readonly contactPhone: FieldRef<"HelpRequest", 'String'>
+    readonly contactEmail: FieldRef<"HelpRequest", 'String'>
     readonly createdAt: FieldRef<"HelpRequest", 'DateTime'>
     readonly updatedAt: FieldRef<"HelpRequest", 'DateTime'>
     readonly userId: FieldRef<"HelpRequest", 'Int'>
@@ -5775,6 +5801,8 @@ export namespace Prisma {
     location: 'location',
     imageUrl: 'imageUrl',
     isCheckout: 'isCheckout',
+    contactPhone: 'contactPhone',
+    contactEmail: 'contactEmail',
     createdAt: 'createdAt',
     updatedAt: 'updatedAt',
     userId: 'userId',
@@ -6006,6 +6034,8 @@ export namespace Prisma {
     location?: StringFilter<"HelpRequest"> | string
     imageUrl?: StringFilter<"HelpRequest"> | string
     isCheckout?: BoolFilter<"HelpRequest"> | boolean
+    contactPhone?: StringFilter<"HelpRequest"> | string
+    contactEmail?: StringNullableFilter<"HelpRequest"> | string | null
     createdAt?: DateTimeFilter<"HelpRequest"> | Date | string
     updatedAt?: DateTimeFilter<"HelpRequest"> | Date | string
     userId?: IntFilter<"HelpRequest"> | number
@@ -6023,6 +6053,8 @@ export namespace Prisma {
     location?: SortOrder
     imageUrl?: SortOrder
     isCheckout?: SortOrder
+    contactPhone?: SortOrder
+    contactEmail?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
@@ -6043,6 +6075,8 @@ export namespace Prisma {
     location?: StringFilter<"HelpRequest"> | string
     imageUrl?: StringFilter<"HelpRequest"> | string
     isCheckout?: BoolFilter<"HelpRequest"> | boolean
+    contactPhone?: StringFilter<"HelpRequest"> | string
+    contactEmail?: StringNullableFilter<"HelpRequest"> | string | null
     createdAt?: DateTimeFilter<"HelpRequest"> | Date | string
     updatedAt?: DateTimeFilter<"HelpRequest"> | Date | string
     userId?: IntFilter<"HelpRequest"> | number
@@ -6060,6 +6094,8 @@ export namespace Prisma {
     location?: SortOrder
     imageUrl?: SortOrder
     isCheckout?: SortOrder
+    contactPhone?: SortOrder
+    contactEmail?: SortOrderInput | SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
@@ -6082,6 +6118,8 @@ export namespace Prisma {
     location?: StringWithAggregatesFilter<"HelpRequest"> | string
     imageUrl?: StringWithAggregatesFilter<"HelpRequest"> | string
     isCheckout?: BoolWithAggregatesFilter<"HelpRequest"> | boolean
+    contactPhone?: StringWithAggregatesFilter<"HelpRequest"> | string
+    contactEmail?: StringNullableWithAggregatesFilter<"HelpRequest"> | string | null
     createdAt?: DateTimeWithAggregatesFilter<"HelpRequest"> | Date | string
     updatedAt?: DateTimeWithAggregatesFilter<"HelpRequest"> | Date | string
     userId?: IntWithAggregatesFilter<"HelpRequest"> | number
@@ -6257,6 +6295,8 @@ export namespace Prisma {
     location: string
     imageUrl?: string
     isCheckout?: boolean
+    contactPhone?: string
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutHelpRequestsInput
@@ -6272,6 +6312,8 @@ export namespace Prisma {
     location: string
     imageUrl?: string
     isCheckout?: boolean
+    contactPhone?: string
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: number
@@ -6286,6 +6328,8 @@ export namespace Prisma {
     location?: StringFieldUpdateOperationsInput | string
     imageUrl?: StringFieldUpdateOperationsInput | string
     isCheckout?: BoolFieldUpdateOperationsInput | boolean
+    contactPhone?: StringFieldUpdateOperationsInput | string
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutHelpRequestsNestedInput
@@ -6301,6 +6345,8 @@ export namespace Prisma {
     location?: StringFieldUpdateOperationsInput | string
     imageUrl?: StringFieldUpdateOperationsInput | string
     isCheckout?: BoolFieldUpdateOperationsInput | boolean
+    contactPhone?: StringFieldUpdateOperationsInput | string
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: IntFieldUpdateOperationsInput | number
@@ -6316,6 +6362,8 @@ export namespace Prisma {
     location: string
     imageUrl?: string
     isCheckout?: boolean
+    contactPhone?: string
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: number
@@ -6329,6 +6377,8 @@ export namespace Prisma {
     location?: StringFieldUpdateOperationsInput | string
     imageUrl?: StringFieldUpdateOperationsInput | string
     isCheckout?: BoolFieldUpdateOperationsInput | boolean
+    contactPhone?: StringFieldUpdateOperationsInput | string
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
   }
@@ -6341,6 +6391,8 @@ export namespace Prisma {
     location?: StringFieldUpdateOperationsInput | string
     imageUrl?: StringFieldUpdateOperationsInput | string
     isCheckout?: BoolFieldUpdateOperationsInput | boolean
+    contactPhone?: StringFieldUpdateOperationsInput | string
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: IntFieldUpdateOperationsInput | number
@@ -6564,6 +6616,21 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
+  export type StringNullableFilter<$PrismaModel = never> = {
+    equals?: string | StringFieldRefInput<$PrismaModel> | null
+    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
+    lt?: string | StringFieldRefInput<$PrismaModel>
+    lte?: string | StringFieldRefInput<$PrismaModel>
+    gt?: string | StringFieldRefInput<$PrismaModel>
+    gte?: string | StringFieldRefInput<$PrismaModel>
+    contains?: string | StringFieldRefInput<$PrismaModel>
+    startsWith?: string | StringFieldRefInput<$PrismaModel>
+    endsWith?: string | StringFieldRefInput<$PrismaModel>
+    mode?: QueryMode
+    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
   export type UserScalarRelationFilter = {
     is?: UserWhereInput
     isNot?: UserWhereInput
@@ -6580,6 +6647,11 @@ export namespace Prisma {
     none?: ExchangeInformationWhereInput
   }
 
+  export type SortOrderInput = {
+    sort: SortOrder
+    nulls?: NullsOrder
+  }
+
   export type ExchangeInformationOrderByRelationAggregateInput = {
     _count?: SortOrder
   }
@@ -6592,6 +6664,8 @@ export namespace Prisma {
     location?: SortOrder
     imageUrl?: SortOrder
     isCheckout?: SortOrder
+    contactPhone?: SortOrder
+    contactEmail?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
@@ -6612,6 +6686,8 @@ export namespace Prisma {
     location?: SortOrder
     imageUrl?: SortOrder
     isCheckout?: SortOrder
+    contactPhone?: SortOrder
+    contactEmail?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
@@ -6626,6 +6702,8 @@ export namespace Prisma {
     location?: SortOrder
     imageUrl?: SortOrder
     isCheckout?: SortOrder
+    contactPhone?: SortOrder
+    contactEmail?: SortOrder
     createdAt?: SortOrder
     updatedAt?: SortOrder
     userId?: SortOrder
@@ -6646,7 +6724,7 @@ export namespace Prisma {
     _max?: NestedBoolFilter<$PrismaModel>
   }
 
-  export type StringNullableFilter<$PrismaModel = never> = {
+  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
     notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -6658,17 +6736,15 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     mode?: QueryMode
-    not?: NestedStringNullableFilter<$PrismaModel> | string | null
+    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
+    _count?: NestedIntNullableFilter<$PrismaModel>
+    _min?: NestedStringNullableFilter<$PrismaModel>
+    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type HelpRequestScalarRelationFilter = {
     is?: HelpRequestWhereInput
     isNot?: HelpRequestWhereInput
-  }
-
-  export type SortOrderInput = {
-    sort: SortOrder
-    nulls?: NullsOrder
   }
 
   export type ExchangeInformationCountOrderByAggregateInput = {
@@ -6706,24 +6782,6 @@ export namespace Prisma {
   export type ExchangeInformationSumOrderByAggregateInput = {
     id?: SortOrder
     helpRequestId?: SortOrder
-  }
-
-  export type StringNullableWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: string | StringFieldRefInput<$PrismaModel> | null
-    in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    notIn?: string[] | ListStringFieldRefInput<$PrismaModel> | null
-    lt?: string | StringFieldRefInput<$PrismaModel>
-    lte?: string | StringFieldRefInput<$PrismaModel>
-    gt?: string | StringFieldRefInput<$PrismaModel>
-    gte?: string | StringFieldRefInput<$PrismaModel>
-    contains?: string | StringFieldRefInput<$PrismaModel>
-    startsWith?: string | StringFieldRefInput<$PrismaModel>
-    endsWith?: string | StringFieldRefInput<$PrismaModel>
-    mode?: QueryMode
-    not?: NestedStringNullableWithAggregatesFilter<$PrismaModel> | string | null
-    _count?: NestedIntNullableFilter<$PrismaModel>
-    _min?: NestedStringNullableFilter<$PrismaModel>
-    _max?: NestedStringNullableFilter<$PrismaModel>
   }
 
   export type HelpRequestCreateNestedManyWithoutUserInput = {
@@ -6856,6 +6914,10 @@ export namespace Prisma {
     set?: boolean
   }
 
+  export type NullableStringFieldUpdateOperationsInput = {
+    set?: string | null
+  }
+
   export type UserUpdateOneRequiredWithoutHelpRequestsNestedInput = {
     create?: XOR<UserCreateWithoutHelpRequestsInput, UserUncheckedCreateWithoutHelpRequestsInput>
     connectOrCreate?: UserCreateOrConnectWithoutHelpRequestsInput
@@ -6904,10 +6966,6 @@ export namespace Prisma {
     create?: XOR<HelpRequestCreateWithoutExchangeInfosInput, HelpRequestUncheckedCreateWithoutExchangeInfosInput>
     connectOrCreate?: HelpRequestCreateOrConnectWithoutExchangeInfosInput
     connect?: HelpRequestWhereUniqueInput
-  }
-
-  export type NullableStringFieldUpdateOperationsInput = {
-    set?: string | null
   }
 
   export type HelpRequestUpdateOneRequiredWithoutExchangeInfosNestedInput = {
@@ -7017,14 +7075,6 @@ export namespace Prisma {
     not?: NestedBoolFilter<$PrismaModel> | boolean
   }
 
-  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
-    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
-    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
-    _count?: NestedIntFilter<$PrismaModel>
-    _min?: NestedBoolFilter<$PrismaModel>
-    _max?: NestedBoolFilter<$PrismaModel>
-  }
-
   export type NestedStringNullableFilter<$PrismaModel = never> = {
     equals?: string | StringFieldRefInput<$PrismaModel> | null
     in?: string[] | ListStringFieldRefInput<$PrismaModel> | null
@@ -7037,6 +7087,14 @@ export namespace Prisma {
     startsWith?: string | StringFieldRefInput<$PrismaModel>
     endsWith?: string | StringFieldRefInput<$PrismaModel>
     not?: NestedStringNullableFilter<$PrismaModel> | string | null
+  }
+
+  export type NestedBoolWithAggregatesFilter<$PrismaModel = never> = {
+    equals?: boolean | BooleanFieldRefInput<$PrismaModel>
+    not?: NestedBoolWithAggregatesFilter<$PrismaModel> | boolean
+    _count?: NestedIntFilter<$PrismaModel>
+    _min?: NestedBoolFilter<$PrismaModel>
+    _max?: NestedBoolFilter<$PrismaModel>
   }
 
   export type NestedStringNullableWithAggregatesFilter<$PrismaModel = never> = {
@@ -7074,6 +7132,8 @@ export namespace Prisma {
     location: string
     imageUrl?: string
     isCheckout?: boolean
+    contactPhone?: string
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     category: CategoryCreateNestedOneWithoutHelpRequestsInput
@@ -7088,6 +7148,8 @@ export namespace Prisma {
     location: string
     imageUrl?: string
     isCheckout?: boolean
+    contactPhone?: string
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     categoryId: number
@@ -7131,6 +7193,8 @@ export namespace Prisma {
     location?: StringFilter<"HelpRequest"> | string
     imageUrl?: StringFilter<"HelpRequest"> | string
     isCheckout?: BoolFilter<"HelpRequest"> | boolean
+    contactPhone?: StringFilter<"HelpRequest"> | string
+    contactEmail?: StringNullableFilter<"HelpRequest"> | string | null
     createdAt?: DateTimeFilter<"HelpRequest"> | Date | string
     updatedAt?: DateTimeFilter<"HelpRequest"> | Date | string
     userId?: IntFilter<"HelpRequest"> | number
@@ -7144,6 +7208,8 @@ export namespace Prisma {
     location: string
     imageUrl?: string
     isCheckout?: boolean
+    contactPhone?: string
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutHelpRequestsInput
@@ -7158,6 +7224,8 @@ export namespace Prisma {
     location: string
     imageUrl?: string
     isCheckout?: boolean
+    contactPhone?: string
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: number
@@ -7334,6 +7402,8 @@ export namespace Prisma {
     location: string
     imageUrl?: string
     isCheckout?: boolean
+    contactPhone?: string
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     user: UserCreateNestedOneWithoutHelpRequestsInput
@@ -7348,6 +7418,8 @@ export namespace Prisma {
     location: string
     imageUrl?: string
     isCheckout?: boolean
+    contactPhone?: string
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: number
@@ -7377,6 +7449,8 @@ export namespace Prisma {
     location?: StringFieldUpdateOperationsInput | string
     imageUrl?: StringFieldUpdateOperationsInput | string
     isCheckout?: BoolFieldUpdateOperationsInput | boolean
+    contactPhone?: StringFieldUpdateOperationsInput | string
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutHelpRequestsNestedInput
@@ -7391,6 +7465,8 @@ export namespace Prisma {
     location?: StringFieldUpdateOperationsInput | string
     imageUrl?: StringFieldUpdateOperationsInput | string
     isCheckout?: BoolFieldUpdateOperationsInput | boolean
+    contactPhone?: StringFieldUpdateOperationsInput | string
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: IntFieldUpdateOperationsInput | number
@@ -7405,6 +7481,8 @@ export namespace Prisma {
     location: string
     imageUrl?: string
     isCheckout?: boolean
+    contactPhone?: string
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     categoryId: number
@@ -7417,6 +7495,8 @@ export namespace Prisma {
     location?: StringFieldUpdateOperationsInput | string
     imageUrl?: StringFieldUpdateOperationsInput | string
     isCheckout?: BoolFieldUpdateOperationsInput | boolean
+    contactPhone?: StringFieldUpdateOperationsInput | string
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     category?: CategoryUpdateOneRequiredWithoutHelpRequestsNestedInput
@@ -7431,6 +7511,8 @@ export namespace Prisma {
     location?: StringFieldUpdateOperationsInput | string
     imageUrl?: StringFieldUpdateOperationsInput | string
     isCheckout?: BoolFieldUpdateOperationsInput | boolean
+    contactPhone?: StringFieldUpdateOperationsInput | string
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: IntFieldUpdateOperationsInput | number
@@ -7445,6 +7527,8 @@ export namespace Prisma {
     location?: StringFieldUpdateOperationsInput | string
     imageUrl?: StringFieldUpdateOperationsInput | string
     isCheckout?: BoolFieldUpdateOperationsInput | boolean
+    contactPhone?: StringFieldUpdateOperationsInput | string
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     categoryId?: IntFieldUpdateOperationsInput | number
@@ -7458,6 +7542,8 @@ export namespace Prisma {
     location: string
     imageUrl?: string
     isCheckout?: boolean
+    contactPhone?: string
+    contactEmail?: string | null
     createdAt?: Date | string
     updatedAt?: Date | string
     userId: number
@@ -7470,6 +7556,8 @@ export namespace Prisma {
     location?: StringFieldUpdateOperationsInput | string
     imageUrl?: StringFieldUpdateOperationsInput | string
     isCheckout?: BoolFieldUpdateOperationsInput | boolean
+    contactPhone?: StringFieldUpdateOperationsInput | string
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     user?: UserUpdateOneRequiredWithoutHelpRequestsNestedInput
@@ -7484,6 +7572,8 @@ export namespace Prisma {
     location?: StringFieldUpdateOperationsInput | string
     imageUrl?: StringFieldUpdateOperationsInput | string
     isCheckout?: BoolFieldUpdateOperationsInput | boolean
+    contactPhone?: StringFieldUpdateOperationsInput | string
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: IntFieldUpdateOperationsInput | number
@@ -7498,6 +7588,8 @@ export namespace Prisma {
     location?: StringFieldUpdateOperationsInput | string
     imageUrl?: StringFieldUpdateOperationsInput | string
     isCheckout?: BoolFieldUpdateOperationsInput | boolean
+    contactPhone?: StringFieldUpdateOperationsInput | string
+    contactEmail?: NullableStringFieldUpdateOperationsInput | string | null
     createdAt?: DateTimeFieldUpdateOperationsInput | Date | string
     updatedAt?: DateTimeFieldUpdateOperationsInput | Date | string
     userId?: IntFieldUpdateOperationsInput | number

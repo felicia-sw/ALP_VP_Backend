@@ -47,6 +47,8 @@ model HelpRequest {
   location            String  @map("help_request_location") @db.VarChar(255)
   imageUrl            String  @default("") @map("help_request_image_url") @db.VarChar(255)
   isCheckout          Boolean @default(false) @map("is_checkout")
+  contactPhone        String  @default("") // WhatsApp Number
+  contactEmail        String? // Optional Email
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
