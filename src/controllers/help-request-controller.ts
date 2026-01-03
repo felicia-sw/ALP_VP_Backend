@@ -6,10 +6,11 @@ export class HelpRequestController {
 
     static async create(req: Request, res: Response, next: NextFunction) {
         try {
-            // Treat body as CreateHelpRequest
-            const request = req.body as CreateHelpRequest;
-            
-            const response = await HelpRequestService.create(request);
+
+            const categoryId = req.query.categoryId ? Number(req.query.categoryId) : undefined;
+
+          
+            const response = await HelpRequestService.getAll(categoryId);
 
             res.status(200).json({
                 data: response

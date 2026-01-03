@@ -1,4 +1,4 @@
-import { HelpRequest } from "../../generated/prisma";
+import { HelpRequest, User } from "../../generated/prisma";
 
 // 1. Request: What the Android App sends to us
 export interface CreateHelpRequest {
@@ -48,6 +48,6 @@ export function toHelpRequestResponse(helpRequest: HelpRequest): HelpRequestResp
     }
 }
 
-export function toHelpRequestResponseList(helpRequests: HelpRequest[]): HelpRequestResponse[] {
+export function toHelpRequestResponseList(helpRequests: (HelpRequest & { user?: User })[]): HelpRequestResponse[] {
     return helpRequests.map((hr) => toHelpRequestResponse(hr));
 }
