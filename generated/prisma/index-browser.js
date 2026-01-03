@@ -143,6 +143,8 @@ exports.Prisma.HelpRequestScalarFieldEnum = {
   location: 'location',
   imageUrl: 'imageUrl',
   isCheckout: 'isCheckout',
+  contactPhone: 'contactPhone',
+  contactEmail: 'contactEmail',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt',
   userId: 'userId',
@@ -156,6 +158,17 @@ exports.Prisma.ExchangeInformationScalarFieldEnum = {
   email: 'email',
   description: 'description',
   helpRequestId: 'helpRequestId'
+};
+
+exports.Prisma.ShoppingCartScalarFieldEnum = {
+  id: 'id',
+  userId: 'userId'
+};
+
+exports.Prisma.ShoppingCartItemScalarFieldEnum = {
+  cartId: 'cartId',
+  helpRequestId: 'helpRequestId',
+  addedAt: 'addedAt'
 };
 
 exports.Prisma.SortOrder = {
@@ -178,7 +191,9 @@ exports.Prisma.ModelName = {
   User: 'User',
   Category: 'Category',
   HelpRequest: 'HelpRequest',
-  ExchangeInformation: 'ExchangeInformation'
+  ExchangeInformation: 'ExchangeInformation',
+  ShoppingCart: 'ShoppingCart',
+  ShoppingCartItem: 'ShoppingCartItem'
 };
 
 /**

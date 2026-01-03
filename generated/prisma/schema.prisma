@@ -21,6 +21,7 @@ model User {
 
   // Relations
   helpRequests HelpRequest[]
+  shoppingCart ShoppingCart? // One-to-One: User might not have a cart yet
 
   @@map("users")
 }
@@ -47,6 +48,8 @@ model HelpRequest {
   location            String  @map("help_request_location") @db.VarChar(255)
   imageUrl            String  @default("") @map("help_request_image_url") @db.VarChar(255)
   isCheckout          Boolean @default(false) @map("is_checkout")
+  contactPhone        String  @default("") // WhatsApp Number
+  contactEmail        String? // Optional Email
 
   createdAt DateTime @default(now()) @map("created_at")
   updatedAt DateTime @updatedAt @map("updated_at")
@@ -56,9 +59,10 @@ model HelpRequest {
   categoryId Int @map("categories_id") // Added to match ERD
 
   // Relations
-  user          User                  @relation(fields: [userId], references: [id])
-  category      Category              @relation(fields: [categoryId], references: [id])
-  exchangeInfos ExchangeInformation[]
+  user              User                  @relation(fields: [userId], references: [id])
+  category          Category              @relation(fields: [categoryId], references: [id])
+  exchangeInfos     ExchangeInformation[]
+  shoppingCartItems ShoppingCartItem[] // A post can be in many people's carts
 
   @@map("help_requests")
 }
@@ -80,4 +84,27 @@ model ExchangeInformation {
   helpRequest HelpRequest @relation(fields: [helpRequestId], references: [id], onDelete: Cascade)
 
   @@map("exchange_informations")
+}
+
+// --- NEW MODELS ---
+
+model ShoppingCart {
+  id     Int  @id @default(autoincrement()) // cart_id
+  userId Int  @unique // user_id (Unique because 1 User = 1 Cart)
+  user   User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  items ShoppingCartItem[]
+}
+
+model ShoppingCartItem {
+  // We use a composite primary key (cartId + helpRequestId)
+  // This prevents adding the same item twice to the same cart
+  cartId        Int
+  helpRequestId Int
+  addedAt       DateTime @default(now())
+
+  cart        ShoppingCart @relation(fields: [cartId], references: [id], onDelete: Cascade)
+  helpRequest HelpRequest  @relation(fields: [helpRequestId], references: [id], onDelete: Cascade)
+
+  @@id([cartId, helpRequestId]) // The Composite Primary Key
 }

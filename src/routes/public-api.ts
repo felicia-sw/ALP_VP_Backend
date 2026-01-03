@@ -2,6 +2,7 @@ import express from "express";
 import { HelpRequestController } from "../controllers/help-request-controller";
 import { UserController } from "../controllers/user-controller";
 import { ExchangeController } from "../controllers/exchange-controller";
+import { ShoppingCartController } from "../controllers/shopping-cart-controller";
 
 export const publicRouter = express.Router(); // create router object to hold all the rules
 
@@ -19,3 +20,8 @@ publicRouter.post("/api/exchanges", ExchangeController.create);
 // New Routes:
 publicRouter.get("/api/exchanges", ExchangeController.getAllExchanges); // Supports ?helpRequestId=1
 publicRouter.delete("/api/exchanges/:exchangeId", ExchangeController.deleteExchange);
+
+// cart endpoints
+publicRouter.get("/api/cart", ShoppingCartController.get);
+publicRouter.post("/api/cart", ShoppingCartController.add);
+publicRouter.delete("/api/cart/:helpRequestId", ShoppingCartController.remove);

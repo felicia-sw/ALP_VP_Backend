@@ -1,6 +1,6 @@
 import { HelpRequest, User } from "../../generated/prisma";
 
-// What the user sends to the backend
+// 1. Request: What the Android App sends to us
 export interface CreateHelpRequest {
     nameOfProduct: string;
     description: string;
@@ -8,17 +8,13 @@ export interface CreateHelpRequest {
     location: string;
     imageUrl: string;
     categoryId: number;
-    userId: number; // only come from the login user token
+    userId: number;
+    // --- NEW ---
+    contactPhone: string;
+    contactEmail?: string; // ? means it can be undefined
 }
 
-// User data to include in help request response
-export interface UserInHelpRequest {
-    id: number;
-    username: string;
-    email: string;
-}
-
-// What the backend sends back to the user with user info included jg
+// 2. Response: What we send back to Android
 export interface HelpRequestResponse {
     id: number;
     nameOfProduct: string;
@@ -29,26 +25,26 @@ export interface HelpRequestResponse {
     isCheckout: boolean;
     userId: number;
     categoryId: number;
-    user?: UserInHelpRequest; // User info for homepage cards
+    // --- NEW ---
+    contactPhone: string;
+    contactEmail: string | null;
 }
 
-// Helper to convert Database Row -> Clean Response
-export function toHelpRequestResponse(helpRequest: HelpRequest & { user?: User }): HelpRequestResponse {
+// 3. Helper: Convert Database Row -> JSON Response
+export function toHelpRequestResponse(helpRequest: HelpRequest): HelpRequestResponse {
     return {
         id: helpRequest.id,
         nameOfProduct: helpRequest.nameOfProduct,
         description: helpRequest.description,
         exchangeProductName: helpRequest.exchangeProductName,
         location: helpRequest.location,
-        imageUrl: helpRequest.imageUrl,
+        imageUrl: helpRequest.imageUrl || "", // Handle potential nulls
         isCheckout: helpRequest.isCheckout,
         userId: helpRequest.userId,
         categoryId: helpRequest.categoryId,
-        user: helpRequest.user ? {
-            id: helpRequest.user.id,
-            username: helpRequest.user.username,
-            email: helpRequest.user.email
-        } : undefined
+        // --- NEW ---
+        contactPhone: helpRequest.contactPhone,
+        contactEmail: helpRequest.contactEmail
     }
 }
 

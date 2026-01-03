@@ -24,6 +24,31 @@ async function main() {
   // Hash password for security (you can use plain text for testing)
   const hashedPassword = await bcrypt.hash('password123', 10);
 
+  
+
+    const user1 = await prisma.user.create({
+        data: {
+            username: "felicia_sword",
+            email: "felicia@example.com",
+            password: hashedPassword,
+        }
+    });
+
+    const user2 = await prisma.user.create({
+        data: {
+            username: "timothy_neighbor",
+            email: "timothy@example.com",
+            password: hashedPassword,
+        }
+    });
+
+    const user3 = await prisma.user.create({
+        data: {
+            username: "budi_santoso",
+            email: "budi@example.com",
+            password: hashedPassword,
+        }
+    });
   // Create Users (matching actual schema: username, email, password)
   const userSiti = await prisma.user.create({
     data: {
