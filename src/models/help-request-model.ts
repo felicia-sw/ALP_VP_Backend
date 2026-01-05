@@ -11,9 +11,6 @@ export interface CreateHelpRequest {
     contactEmail: string;
     categoryId: number;
     userId: number;
-    // --- NEW ---
-    contactPhone: string;
-    contactEmail?: string; // ? means it can be undefined
 }
 
 // 2. Response: What we send back to Android
@@ -29,9 +26,6 @@ export interface HelpRequestResponse {
     isCheckout: boolean;
     userId: number;
     categoryId: number;
-    // --- NEW ---
-    contactPhone: string;
-    contactEmail: string | null;
 }
 
 // 3. Helper: Convert Database Row -> JSON Response
@@ -47,10 +41,7 @@ export function toHelpRequestResponse(helpRequest: HelpRequest): HelpRequestResp
         contactEmail: helpRequest.contactEmail,
         isCheckout: helpRequest.isCheckout,
         userId: helpRequest.userId,
-        categoryId: helpRequest.categoryId,
-        // --- NEW ---
-        contactPhone: helpRequest.contactPhone,
-        contactEmail: helpRequest.contactEmail
+        categoryId: helpRequest.categoryId
     }
 }
 

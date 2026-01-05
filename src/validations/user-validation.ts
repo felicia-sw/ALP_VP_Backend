@@ -20,8 +20,8 @@ export class UserValidation {
             .string({
                 error: "Password must be string!",
             })
-            .min(8, {
-                error: "Password must contain more than or equal to 8 characters!",
+            .min(6, {
+                error: "Password must contain more than or equal to 6 characters!",
             }),
     })
 
@@ -37,8 +37,8 @@ export class UserValidation {
             .string({
                 error: "Password must be string!",
             })
-            .min(8, {
-                error: "Password must contain more than or equal to 8 characters!",
+            .min(6, {
+                error: "Password must contain more than or equal to 6 characters!",
             }),
     })
 }

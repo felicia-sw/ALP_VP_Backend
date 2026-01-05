@@ -32,4 +32,19 @@ export class HelpRequestController {
             next(error);
         }
     }
+
+    static async getByUser(req: Request, res: Response, next: NextFunction) {
+        try {
+            // Get user ID from the authenticated user
+            const userId = (req as any).user.id;
+            
+            const response = await HelpRequestService.getByUserId(userId);
+            
+            res.status(200).json({
+                data: response
+            });
+        } catch (error) {
+            next(error);
+        }
+    }
 }

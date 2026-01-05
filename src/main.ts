@@ -20,6 +20,7 @@ app.use("/api/trades", tradeRouter);
 // Register Error Middleware (Optional, but recommended if you have the file)
 app.use(errorMiddleware);
 
-app.listen(PORT || 3000, () => {
-    console.log(`Connected to port ${PORT || 3000}`);
+const port = Number(PORT) || 3000;
+app.listen(port, '0.0.0.0', () => {
+    console.log(`Connected to port ${port}`);
 });

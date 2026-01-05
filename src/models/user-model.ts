@@ -19,6 +19,9 @@ export interface LoginUserRequest {
 }
 
 export interface UserResponse {
+    id: number
+    username: string
+    email: string
     token?: string
 }
 
@@ -28,6 +31,9 @@ export function toUserResponse(
     email: string
 ): UserResponse {
     return {
+        id: id,
+        username: username,
+        email: email,
         token: generateToken(
             {
                 id: id,

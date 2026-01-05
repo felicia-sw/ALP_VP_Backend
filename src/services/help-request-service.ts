@@ -37,11 +37,7 @@ export class HelpRequestService {
                 contactPhone: validatedData.contactPhone,
                 contactEmail: validatedData.contactEmail,
                 userId: validatedData.userId,
-                categoryId: validatedData.categoryId,
-                
-                // --- NEW: Pass the validated phone/email to Prisma ---
-                contactPhone: validatedData.contactPhone,
-                contactEmail: validatedData.contactEmail
+                categoryId: validatedData.categoryId
             }
         });
 
@@ -60,6 +56,21 @@ export class HelpRequestService {
             },
             orderBy: {
                 createdAt: 'desc' 
+            }
+        });
+        return toHelpRequestResponseList(helpRequests);
+    }
+
+    static async getByUserId(userId: number): Promise<HelpRequestResponse[]> {
+        const helpRequests = await prismaClient.helpRequest.findMany({
+            where: {
+                userId: userId
+            },
+            include: {
+                user: true
+            },
+            orderBy: {
+                createdAt: 'desc'
             }
         });
         return toHelpRequestResponseList(helpRequests);
