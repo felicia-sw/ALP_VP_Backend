@@ -1,12 +1,10 @@
-import express from "express";
+import { Router } from "express";
 import { authMiddleware } from "../middlewares/auth-middleware";
 import { viewTradeHistory, viewTradeDetail } from "../controllers/trade.controller";
 
-const tradeRouter = express. Router();
+const router = Router();
 
-tradeRouter.use(authMiddleware);
+router.get("/history", authMiddleware, viewTradeHistory);
+router.get("/:id", authMiddleware, viewTradeDetail);
 
-tradeRouter.get("/history", viewTradeHistory);
-tradeRouter.get("/:id", viewTradeDetail);
-
-export default tradeRouter;
+export default router;
