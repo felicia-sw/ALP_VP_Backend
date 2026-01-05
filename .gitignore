@@ -3,4 +3,6 @@
 /generated/
 /generated/prisma/
 generated/prisma/
+generated
+
 node_modules

@@ -17,11 +17,17 @@ export const errorMiddleware = async (
         })
     } else if (error instanceof ResponseError) {
         res.status(error.status).json({
-            errors: error.message,
-        })
-    } else {
+            errors: error.message
+        }).end();
+    } 
+    else if (error instanceof ZodError) {
+        res.status(400).json({
+            errors: "Validation Error:  " + JSON.stringify(error.issues)
+        }).end();
+    } 
+    else {
         res.status(500).json({
-            errors: error.message,
-        })
+            errors: error.message || "Internal Server Error"
+        }).end();
     }
-}
+};

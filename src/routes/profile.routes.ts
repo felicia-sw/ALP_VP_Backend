@@ -1,10 +1,14 @@
-import { Router } from "express";
+import express from "express";
 import { authMiddleware } from "../middlewares/auth-middleware";
 import { viewMyProfile, updateMyProfile } from "../controllers/profile.controller";
 
-const router = Router();
+const profileRouter = express.Router();
 
-router.get("/me", authMiddleware, viewMyProfile);
-router.put("/me", authMiddleware, updateMyProfile);
+// Auth middleware
+profileRouter.use(authMiddleware);
 
-export default router;
+// Routes
+profileRouter.get("/me", viewMyProfile);
+profileRouter.put("/me", updateMyProfile);
+
+export default profileRouter;

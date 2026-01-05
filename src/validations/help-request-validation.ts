@@ -10,6 +10,12 @@ export class HelpRequestValidation {
         contactPhone: z.string().min(1, "Contact phone is required").max(20),
         contactEmail: z.string().email("Must be a valid email").max(150),
         categoryId: z.number().int().positive(),
-        userId: z.number().int().positive()
+        userId: z.number().int().positive(), 
+
+        // --- NEW FIELDS ADDED HERE ---
+        // 1. Phone is required
+        contactPhone: z.string().min(1, "Phone number is required").max(20),
+        // 2. Email is optional (can be a valid email OR an empty string)
+        contactEmail: z.string().email("Invalid email").optional().or(z.literal(""))
     });
 }

@@ -18,7 +18,7 @@ app.use("/api", privateRouter)
 app.use("/api/profile", profileRouter);
 app.use("/api/trades", tradeRouter);
 // Register Error Middleware (Optional, but recommended if you have the file)
-// app.use(errorMiddleware);
+app.use(errorMiddleware);
 
 app.listen(PORT || 3000, () => {
     console.log(`Connected to port ${PORT || 3000}`);
