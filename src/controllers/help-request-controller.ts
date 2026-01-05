@@ -4,13 +4,12 @@ import { HelpRequestService } from "../services/help-request-service";
 
 export class HelpRequestController {
 
-    static async create(req: Request, res: Response, next: NextFunction) {
+     static async create(req: Request, res: Response, next: NextFunction) {
         try {
-
-            const categoryId = req.query.categoryId ? Number(req.query.categoryId) : undefined;
-
-          
-            const response = await HelpRequestService.getAll(categoryId);
+            // Treat body as CreateHelpRequest
+            const request = req.body as CreateHelpRequest;
+            
+            const response = await HelpRequestService.create(request);
 
             res.status(200).json({
                 data: response
@@ -19,6 +18,8 @@ export class HelpRequestController {
             next(error);
         }
     }
+
+    
 
     static async getAll(req: Request, res: Response, next: NextFunction) {
         try {
