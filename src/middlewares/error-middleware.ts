@@ -8,6 +8,9 @@ export const errorMiddleware = async (
     res: Response,
     next: NextFunction
 ) => {
+    // Log the error for debugging
+    console.error('Error occurred:', error);
+    
     if (error instanceof ZodError) {
         res.status(400).json({
             errors: `Validation error: ${JSON.stringify(error.message)}`,

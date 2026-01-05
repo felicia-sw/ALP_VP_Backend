@@ -70,16 +70,18 @@ async function main() {
   // Create Help Requests (10 items for testing)
   await prisma.helpRequest.create({
     data: {
-      nameOfProduct: 'Sayuran Organik Segar',
-      description: 'Sayuran segar langsung dari kebun sendiri. Bebas pestisida. Tersedia bayam, kangkung, dan sawi.',
-      exchangeProductName: 'Telur ayam kampung atau buah-buahan lokal',
-      location: 'Banjarbaru, Kalimantan Selatan',
-      imageUrl: 'https://placehold.co/600x400/orange/white?text=Sayuran',
-      isCheckout: false,
-      userId: userSiti.id,
-      categoryId: things.id,
+      nameOfProduct: 'Sepeda Bekas',
+    description:  'Sepeda gunung bekas...',
+    exchangeProductName: 'Motor bekas atau uang 500rb',
+    location: 'Banjarmasin, Kalimantan Selatan',
+    imageUrl:  'https://placehold.co/600x400/blue/white?text=Sepeda',
+    isCheckout: false,
+    userId: userBudi.id,
+    categoryId: things.id,
+    contactPhone: '+6281234567801',
+    contactEmail: 'budi@example.com',
     },
-  });
+  }); 
 
   await prisma.helpRequest.create({
     data: {
@@ -89,8 +91,11 @@ async function main() {
       location: 'Banjarbaru, Kalimantan Selatan',
       imageUrl: 'https://placehold.co/600x400/gray/white?text=Alat+Tukang',
       isCheckout: false,
-      userId: userAhmad.id,
-      categoryId: things.id,
+    userId: userBudi.id,
+    categoryId: things.id,
+       contactPhone: '+6281234567802',
+    contactEmail: 'budi@example.com',
+      
     },
   });
 
@@ -104,6 +109,8 @@ async function main() {
       isCheckout: false,
       userId: userBudi.id,
       categoryId: services.id,
+         contactPhone: '+6281234567803',
+    contactEmail: 'budi@example.com',
     },
   });
 
@@ -117,6 +124,8 @@ async function main() {
       isCheckout: false,
       userId: userDewi.id,
       categoryId: things.id,
+      contactPhone: '+6281234567804',
+      contactEmail: 'dewi@example.com',
     },
   });
 
@@ -130,6 +139,8 @@ async function main() {
       isCheckout: false,
       userId: userRizki.id,
       categoryId: services.id,
+      contactPhone: '+6281234567805',
+      contactEmail: 'rizki@example.com',
     },
   });
 
@@ -143,6 +154,8 @@ async function main() {
       isCheckout: false,
       userId: userSiti.id,
       categoryId: things.id,
+      contactPhone: '+6281234567806',
+      contactEmail: 'siti@example.com',
     },
   });
 
@@ -156,6 +169,8 @@ async function main() {
       isCheckout: false,
       userId: userAhmad.id,
       categoryId: things.id,
+      contactPhone: '+6281234567807',
+      contactEmail: 'ahmad@example.com',
     },
   });
 
@@ -169,6 +184,8 @@ async function main() {
       isCheckout: false,
       userId: userBudi.id,
       categoryId: services.id,
+      contactPhone: '+6281234567808',
+      contactEmail: 'budi2@example.com',
     },
   });
 
@@ -182,6 +199,8 @@ async function main() {
       isCheckout: false,
       userId: userDewi.id,
       categoryId: things.id,
+      contactPhone: '+6281234567809',
+      contactEmail: 'dewi2@example.com',
     },
   });
 
@@ -195,6 +214,8 @@ async function main() {
       isCheckout: false,
       userId: userRizki.id,
       categoryId: services.id,
+      contactPhone: '+6281234567810',
+      contactEmail: 'rizki2@example.com',
     },
   });
 

@@ -7,6 +7,8 @@ export interface CreateHelpRequest {
     exchangeProductName: string;
     location: string;
     imageUrl: string;
+    contactPhone: string;
+    contactEmail: string;
     categoryId: number;
     userId: number; // In a real app, this comes from the logged-in user token
 }
@@ -19,6 +21,8 @@ export interface HelpRequestResponse {
     exchangeProductName: string;
     location: string;
     imageUrl: string;
+    contactPhone: string;
+    contactEmail: string;
     isCheckout: boolean;
     userId: number;
     categoryId: number;
@@ -33,6 +37,8 @@ export function toHelpRequestResponse(helpRequest: HelpRequest): HelpRequestResp
         exchangeProductName: helpRequest.exchangeProductName,
         location: helpRequest.location,
         imageUrl: helpRequest.imageUrl,
+        contactPhone: helpRequest.contactPhone,
+        contactEmail: helpRequest.contactEmail,
         isCheckout: helpRequest.isCheckout,
         userId: helpRequest.userId,
         categoryId: helpRequest.categoryId

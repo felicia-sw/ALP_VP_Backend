@@ -34,6 +34,8 @@ export class HelpRequestService {
                 exchangeProductName: validatedData.exchangeProductName,
                 location: validatedData.location,
                 imageUrl: validatedData.imageUrl || "", // Handle empty string if optional
+                contactPhone: validatedData.contactPhone,
+                contactEmail: validatedData.contactEmail,
                 userId: validatedData.userId,
                 categoryId: validatedData.categoryId
             }

@@ -1,3 +1,5 @@
+
+// src/controllers/profile.controller.ts
 import { Response, NextFunction } from "express";
 import bcrypt from "bcrypt";
 import { prismaClient } from "../utils/database-util";
@@ -18,11 +20,11 @@ export const viewMyProfile = async (req: UserRequest, res: Response, next: NextF
 
     return res.json({
       data: {
-        id: user.id,
         username: user.username,
-        email: user.email,
-        createdAt: user.createdAt,
-        updatedAt: user.updatedAt
+        fullName: user.fullName || user.username, // Fallback to username if no fullName
+        location: user.location || "",
+        bio: user.bio || null,
+        photoUrl: user.photoUrl || null
       }
     });
   } catch (err) {
@@ -37,20 +39,20 @@ export const updateMyProfile = async (req: UserRequest, res: Response, next: Nex
     const userId = req.user?.id;
     if (!userId) return next(new ResponseError(401, "Unauthorized user!"));
 
-    const { username, email, password } = req.body as {
-      username?: string;
-      email?: string;
-      password?: string;
+    const { fullName, location, bio } = req.body as {
+      fullName?: string;
+      location?: string;
+      bio?: string;
     };
 
-    if (!username && !email && !password) {
-      return next(new ResponseError(400, "At least one field (username/email/password) must be provided"));
+    if (!fullName && !location && bio === undefined) {
+      return next(new ResponseError(400, "At least one field must be provided"));
     }
 
     const dataToUpdate: any = {};
-    if (username) dataToUpdate.username = username;
-    if (email) dataToUpdate.email = email;
-    if (password) dataToUpdate.password = await bcrypt.hash(password, 10);
+    if (fullName) dataToUpdate.fullName = fullName;
+    if (location) dataToUpdate.location = location;
+    if (bio !== undefined) dataToUpdate.bio = bio; // Allow empty string
 
     const updated = await prismaClient.user.update({
       where: { id: userId },
@@ -59,11 +61,11 @@ export const updateMyProfile = async (req: UserRequest, res: Response, next: Nex
 
     return res.json({
       data: {
-        id: updated.id,
         username: updated.username,
-        email: updated.email,
-        createdAt: updated.createdAt,
-        updatedAt: updated.updatedAt
+        fullName: updated.fullName || updated.username,
+        location: updated.location || "",
+        bio: updated.bio || null,
+        photoUrl: updated.photoUrl || null
       }
     });
   } catch (err) {

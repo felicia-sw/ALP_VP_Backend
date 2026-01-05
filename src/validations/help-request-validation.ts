@@ -7,6 +7,8 @@ export class HelpRequestValidation {
         exchangeProductName: z.string().min(1, "Exchange product is required").max(255),
         location: z.string().min(1, "Location is required").max(255),
         imageUrl: z.string().url("Must be a valid URL").optional().or(z.literal("")), // Optional for now
+        contactPhone: z.string().min(1, "Contact phone is required").max(20),
+        contactEmail: z.string().email("Must be a valid email").max(150),
         categoryId: z.number().int().positive(),
         userId: z.number().int().positive()
     });
