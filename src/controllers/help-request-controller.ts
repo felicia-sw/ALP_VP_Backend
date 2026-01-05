@@ -4,7 +4,7 @@ import { HelpRequestService } from "../services/help-request-service";
 
 export class HelpRequestController {
 
-    static async create(req: Request, res: Response, next: NextFunction) {
+     static async create(req: Request, res: Response, next: NextFunction) {
         try {
             // Treat body as CreateHelpRequest
             const request = req.body as CreateHelpRequest;
@@ -18,6 +18,8 @@ export class HelpRequestController {
             next(error);
         }
     }
+
+    
 
     static async getAll(req: Request, res: Response, next: NextFunction) {
         try {

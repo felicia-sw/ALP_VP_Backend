@@ -1,6 +1,6 @@
-import { HelpRequest } from "../../generated/prisma";
+import { HelpRequest, User } from "../../generated/prisma";
 
-// What the user sends to the backend
+// 1. Request: What the Android App sends to us
 export interface CreateHelpRequest {
     nameOfProduct: string;
     description: string;
@@ -8,10 +8,13 @@ export interface CreateHelpRequest {
     location: string;
     imageUrl: string;
     categoryId: number;
-    userId: number; // In a real app, this comes from the logged-in user token
+    userId: number;
+    // --- NEW ---
+    contactPhone: string;
+    contactEmail?: string; // ? means it can be undefined
 }
 
-// What the backend sends back to the user
+// 2. Response: What we send back to Android
 export interface HelpRequestResponse {
     id: number;
     nameOfProduct: string;
@@ -22,9 +25,12 @@ export interface HelpRequestResponse {
     isCheckout: boolean;
     userId: number;
     categoryId: number;
+    // --- NEW ---
+    contactPhone: string;
+    contactEmail: string | null;
 }
 
-// Helper to convert Database Row -> Clean Response
+// 3. Helper: Convert Database Row -> JSON Response
 export function toHelpRequestResponse(helpRequest: HelpRequest): HelpRequestResponse {
     return {
         id: helpRequest.id,
@@ -32,13 +38,16 @@ export function toHelpRequestResponse(helpRequest: HelpRequest): HelpRequestResp
         description: helpRequest.description,
         exchangeProductName: helpRequest.exchangeProductName,
         location: helpRequest.location,
-        imageUrl: helpRequest.imageUrl,
+        imageUrl: helpRequest.imageUrl || "", // Handle potential nulls
         isCheckout: helpRequest.isCheckout,
         userId: helpRequest.userId,
-        categoryId: helpRequest.categoryId
+        categoryId: helpRequest.categoryId,
+        // --- NEW ---
+        contactPhone: helpRequest.contactPhone,
+        contactEmail: helpRequest.contactEmail
     }
 }
 
-export function toHelpRequestResponseList(helpRequests: HelpRequest[]): HelpRequestResponse[] {
+export function toHelpRequestResponseList(helpRequests: (HelpRequest & { user?: User })[]): HelpRequestResponse[] {
     return helpRequests.map((hr) => toHelpRequestResponse(hr));
 }

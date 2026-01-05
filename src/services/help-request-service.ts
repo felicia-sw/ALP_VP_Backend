@@ -7,10 +7,10 @@ import { ResponseError } from "../error/response-error";
 export class HelpRequestService {
 
     static async create(request: CreateHelpRequest): Promise<HelpRequestResponse> {
-        // 1. Validate the input data
+        // 1. Validate the input data (Uses the Zod schema we updated in File 1)
         const validatedData = Validation.validate(HelpRequestValidation.CREATE, request);
 
-        // 2. Check if Category exists (Optional but good practice)
+        // 2. Check if Category exists
         const categoryCount = await prismaClient.category.count({
             where: { id: validatedData.categoryId }
         });
@@ -33,17 +33,33 @@ export class HelpRequestService {
                 description: validatedData.description,
                 exchangeProductName: validatedData.exchangeProductName,
                 location: validatedData.location,
-                imageUrl: validatedData.imageUrl || "", // Handle empty string if optional
+                imageUrl: validatedData.imageUrl || "",
                 userId: validatedData.userId,
-                categoryId: validatedData.categoryId
+                categoryId: validatedData.categoryId,
+                
+                // --- NEW: Pass the validated phone/email to Prisma ---
+                contactPhone: validatedData.contactPhone,
+                contactEmail: validatedData.contactEmail
             }
         });
 
         return toHelpRequestResponse(helpRequest);
     }
 
-    static async getAll(): Promise<HelpRequestResponse[]> {
-        const helpRequests = await prismaClient.helpRequest.findMany();
+   static async getAll(categoryId?: number): Promise<HelpRequestResponse[]> {
+    
+    const helpRequests = await prismaClient.helpRequest.findMany({
+               where: {
+            // if categoryId ada akan di filter, if not hen ignore
+            categoryId: categoryId 
+        },
+            include: {
+                user: true //  include th username email for UI cards
+            },
+            orderBy: {
+                createdAt: 'desc' 
+            }
+        });
         return toHelpRequestResponseList(helpRequests);
     }
 }
