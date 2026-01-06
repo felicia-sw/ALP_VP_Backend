@@ -1,6 +1,15 @@
 // src/models/exchange-model.ts
 import { ExchangeInformation } from "../../generated/prisma";
 
+
+// Add this to your existing imports or at the top
+export interface CheckoutRequest {
+    name: string;
+    phone: string;
+    email?: string;
+    description: string; // The message you want to send to all owners
+}
+
 // Request: What the frontend sends to us
 export interface CreateExchangeRequest {
     name: string;

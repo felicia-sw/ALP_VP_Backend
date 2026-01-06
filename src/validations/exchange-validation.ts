@@ -1,5 +1,5 @@
 // src/validations/exchange-validation.ts
-import { z, ZodType } from "zod";
+import { z, type ZodType } from "zod";
 
 export class ExchangeValidation {
     static readonly CREATE: ZodType = z.object({
