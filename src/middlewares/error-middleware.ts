@@ -8,6 +8,10 @@ export const errorMiddleware = async (
     res: Response,
     next: NextFunction
 ) => {
+    // Log the full error for debugging
+    console.error("Error occurred:", error);
+    console.error("Error stack:", error.stack);
+    
     if (error instanceof ResponseError) {
         res.status(error.status).json({
             errors: error.message
