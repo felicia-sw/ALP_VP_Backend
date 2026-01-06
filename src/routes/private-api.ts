@@ -20,4 +20,4 @@ privateRouter.put("/profile/me", updateMyProfile);
 
 privateRouter.get("/trades/:id", viewTradeDetail);
 
-privateRouter.post("/checkout", ExchangeController.checkout);
+privateRouter.post("/checkout", ExchangeController.create);

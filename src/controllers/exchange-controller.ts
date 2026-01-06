@@ -7,6 +7,7 @@ import { UserRequest } from "../models/user-request-model";
 
 export class ExchangeController {
 
+
     static async create(req: Request, res: Response, next: NextFunction) {
         try {
             // Treat the JSON body as a CreateExchangeRequest
