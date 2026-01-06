@@ -18,7 +18,6 @@ privateRouter.use(authMiddleware)
 privateRouter.get("/profile/me", viewMyProfile);
 privateRouter.put("/profile/me", updateMyProfile);
 
-privateRouter.get("/trades/history", viewTradeHistory);
 privateRouter.get("/trades/:id", viewTradeDetail);
 
 privateRouter.post("/checkout", ExchangeController.checkout);
