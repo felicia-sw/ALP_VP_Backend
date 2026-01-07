@@ -4,6 +4,8 @@ import { CreateExchangeRequest, toExchangeResponse, ExchangeResponse, toExchange
 import { Validation } from "../validations/validation";
 import { ExchangeValidation } from "../validations/exchange-validation";
 import { ResponseError } from "../error/response-error";
+import { CheckoutRequest } from "../models/exchange-model";
+import { User } from "../../generated/prisma"; // Or wherever your Prisma types are
 
 export class ExchangeService {
 
@@ -64,6 +66,44 @@ export class ExchangeService {
         });
 
         return "Exchange offer deleted successfully!";
+    }
+
+    // NEW: Checkout Method
+    static async checkout(userId: number, request: CheckoutRequest): Promise<string> {
+        // 1. Get User's Cart with Items
+        const cart = await prismaClient.shoppingCart.findUnique({
+            where: { userId: userId },
+            include: { items: true }
+        });
+
+        if (!cart || cart.items.length === 0) {
+            throw new ResponseError(400, "Cart is empty!");
+        }
+
+        // 2. Perform Transaction (Create Offers + Delete Cart Items)
+        // This ensures if one fails, everything is rolled back.
+        await prismaClient.$transaction(async (prisma) => {
+            
+            // A. Loop through cart items and create Exchange Offers
+            for (const item of cart.items) {
+                await prisma.exchangeInformation.create({
+                    data: {
+                        name: request.name,
+                        phone: request.phone,
+                        email: request.email || null,
+                        description: `[Batch Offer] ${request.description}`, // Tag it so you know it was a bulk offer
+                        helpRequestId: item.helpRequestId
+                    }
+                });
+            }
+
+            // B. Clear the Cart Items
+            await prisma.shoppingCartItem.deleteMany({
+                where: { cartId: cart.id }
+            });
+        });
+
+        return `Successfully sent offers for ${cart.items.length} items!`;
     }
 
 //     DELETE /api/exchanges/:id (The "Cancel Offer" Feature)

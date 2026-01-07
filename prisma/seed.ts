@@ -42,13 +42,7 @@ async function main() {
         }
     });
 
-    const user3 = await prisma.user.create({
-        data: {
-            username: "budi_santoso",
-            email: "budi@example.com",
-            password: hashedPassword,
-        }
-    });
+
   // Create Users (matching actual schema: username, email, password)
   const userSiti = await prisma.user.create({
     data: {
@@ -101,6 +95,8 @@ async function main() {
       location: 'Banjarbaru, Kalimantan Selatan',
       imageUrl: 'https://placehold.co/600x400/orange/white?text=Sayuran',
       isCheckout: false,
+      contactPhone: '081234567890',
+      contactEmail: 'siti@example.com',
       userId: userSiti.id,
       categoryId: things.id,
     },
@@ -114,6 +110,8 @@ async function main() {
       location: 'Banjarbaru, Kalimantan Selatan',
       imageUrl: 'https://placehold.co/600x400/gray/white?text=Alat+Tukang',
       isCheckout: false,
+      contactPhone: '081234567891',
+      contactEmail: 'ahmad@example.com',
       userId: userAhmad.id,
       categoryId: things.id,
     },
@@ -127,6 +125,8 @@ async function main() {
       location: 'Banjarmasin, Kalimantan Selatan',
       imageUrl: 'https://placehold.co/600x400/blue/white?text=Servis',
       isCheckout: false,
+      contactPhone: '081234567892',
+      contactEmail: 'budi@example.com',
       userId: userBudi.id,
       categoryId: services.id,
     },
@@ -140,6 +140,8 @@ async function main() {
       location: 'Martapura, Kalimantan Selatan',
       imageUrl: 'https://placehold.co/600x400/green/white?text=Buku',
       isCheckout: false,
+      contactPhone: '081234567893',
+      contactEmail: 'dewi@example.com',
       userId: userDewi.id,
       categoryId: things.id,
     },
@@ -153,6 +155,8 @@ async function main() {
       location: 'Banjarbaru, Kalimantan Selatan',
       imageUrl: 'https://placehold.co/600x400/purple/white?text=Les',
       isCheckout: false,
+      contactPhone: '081234567894',
+      contactEmail: 'rizki@example.com',
       userId: userRizki.id,
       categoryId: services.id,
     },
@@ -166,6 +170,8 @@ async function main() {
       location: 'Banjarmasin, Kalimantan Selatan',
       imageUrl: 'https://placehold.co/600x400/pink/white?text=Baju+Anak',
       isCheckout: false,
+      contactPhone: '081234567895',
+      contactEmail: 'siti@example.com',
       userId: userSiti.id,
       categoryId: things.id,
     },
@@ -179,6 +185,8 @@ async function main() {
       location: 'Banjarbaru, Kalimantan Selatan',
       imageUrl: 'https://placehold.co/600x400/red/white?text=Alat+Masak',
       isCheckout: false,
+      contactPhone: '081234567896',
+      contactEmail: 'ahmad@example.com',
       userId: userAhmad.id,
       categoryId: things.id,
     },
@@ -192,6 +200,8 @@ async function main() {
       location: 'Banjarmasin, Kalimantan Selatan',
       imageUrl: 'https://placehold.co/600x400/cyan/white?text=Potong+Rambut',
       isCheckout: false,
+      contactPhone: '081234567897',
+      contactEmail: 'budi@example.com',
       userId: userBudi.id,
       categoryId: services.id,
     },
@@ -205,6 +215,8 @@ async function main() {
       location: 'Martapura, Kalimantan Selatan',
       imageUrl: 'https://placehold.co/600x400/lime/white?text=Kaktus',
       isCheckout: false,
+      contactPhone: '081234567898',
+      contactEmail: 'dewi@example.com',
       userId: userDewi.id,
       categoryId: things.id,
     },
@@ -218,6 +230,8 @@ async function main() {
       location: 'Banjarbaru, Kalimantan Selatan',
       imageUrl: 'https://placehold.co/600x400/yellow/black?text=Desain',
       isCheckout: false,
+      contactPhone: '081234567899',
+      contactEmail: 'rizki@example.com',
       userId: userRizki.id,
       categoryId: services.id,
     },
